@@ -76,9 +76,8 @@
         #noBtn {
             background: #e0e0e0;
             color: #666;
-            position: fixed;
+            position: absolute;
             transition: all 0.2s ease;
-            z-index: 1000;
         }
 
         #noBtn:hover {
@@ -169,9 +168,19 @@
     const heartsContainer = document.getElementById('hearts');
 
     let noBtnSize = 1;
+    let isFirstHover = true;
 
     noBtn.addEventListener('mouseover', () => {
-        noBtnSize -= 0.1;
+        // On first hover, just change it to fixed position without animation
+        if (isFirstHover) {
+            noBtn.style.position = 'fixed';
+            const rect = noBtn.getBoundingClientRect();
+            noBtn.style.left = rect.left + 'px';
+            noBtn.style.top = rect.top + 'px';
+            isFirstHover = false;
+        }
+
+        noBtnSize -= 0.05;
         if (noBtnSize < 0.4) {
             noBtn.style.display = 'none';
             return;
