@@ -76,8 +76,9 @@
         #noBtn {
             background: #e0e0e0;
             color: #666;
-            position: absolute;
+            position: fixed;
             transition: all 0.2s ease;
+            z-index: 1000;
         }
 
         #noBtn:hover {
@@ -170,19 +171,17 @@
     let noBtnSize = 1;
 
     noBtn.addEventListener('mouseover', () => {
-        const container = document.querySelector('.buttons');
-        const containerRect = container.getBoundingClientRect();
-
-        noBtnSize -= 0.1;
-        if (noBtnSize < 0.3) {
+        noBtnSize -= 0.03;
+        if (noBtnSize < 0.4) {
             noBtn.style.display = 'none';
             return;
         }
 
         noBtn.style.fontSize = noBtnSize + 'em';
 
-        const maxX = containerRect.width - noBtn.offsetWidth;
-        const maxY = containerRect.height - noBtn.offsetHeight;
+        // Run anywhere on the entire screen!
+        const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+        const maxY = window.innerHeight - noBtn.offsetHeight - 20;
 
         const randomX = Math.random() * maxX;
         const randomY = Math.random() * maxY;
